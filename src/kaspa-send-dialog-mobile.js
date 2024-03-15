@@ -1,5 +1,5 @@
 import {
-	html, css, KaspaDialog, askForPassword, KAS,
+	html, css, KaspaDialog, askForPassword, HTN,
 	formatForMachine, T, i18n, formatForHuman, getLocalWallet
 } from './kaspa-dialog.js';
 import {Wallet} from '@kaspa/wallet-worker';
@@ -78,12 +78,12 @@ class KaspaSendDialogMobile extends KaspaDialog{
 			</div>
 			${this.renderAddress()}
 			<flow-input class="amount full-width" suffix-btn outer-border
-				label="${T('Amount in KAS')}" @keyup=${this.onAmountChange}>
+				label="${T('Amount in HTN')}" @keyup=${this.onAmountChange}>
 				<flow-btn slot="suffix" class="primary"
 					@click="${this.showT9}"><fa-icon icon="keyboard"></fa-icon></flow-btn>
 			</flow-input>
 			<flow-input class="fee full-width" suffix-btn outer-border
-				label="${T('Priority Fee in KAS')}"
+				label="${T('Priority Fee in HTN')}"
 				@keyup="${this.onNetworkFeeChange}">
 				<flow-btn slot="suffix" class="primary"
 					@click="${this.showT9}"><fa-icon icon="keyboard"></fa-icon></flow-btn>
@@ -122,9 +122,9 @@ class KaspaSendDialogMobile extends KaspaDialog{
 		<div class="estimate-tx">
 			<table>
 				${txSize?html`<tr><td is="i18n-td">Transaction Size</td><td>${txSize.toFileSize()}</td></tr>`:''}
-				${dataFee?html`<tr><td is="i18n-td">Data Fee</td><td>${KAS(dataFee)} KAS</td></tr>`:''}
-				${fee?html`<tr><td is="i18n-td">Total Fee</td><td>${KAS(fee)} KAS</td></tr>`:''}
-				${totalAmount?html`<tr><td is="i18n-td">Total Amount</td><td> ${KAS(totalAmount)} KAS</td></tr>`:''}
+				${dataFee?html`<tr><td is="i18n-td">Data Fee</td><td>${HTN(dataFee)} HTN</td></tr>`:''}
+				${fee?html`<tr><td is="i18n-td">Total Fee</td><td>${HTN(fee)} HTN</td></tr>`:''}
+				${totalAmount?html`<tr><td is="i18n-td">Total Amount</td><td> ${HTN(totalAmount)} HTN</td></tr>`:''}
 			</table>
 		</div>
 		`
@@ -199,7 +199,7 @@ class KaspaSendDialogMobile extends KaspaDialog{
 		let {value=''} = input;
 		showT9({
 			value,
-			heading:input.label.replace("in KAS", ""),
+			heading:input.label.replace("in HTN", ""),
 			inputLabel:input.label
 		}, ({value, dialog})=>{
 			console.log("t9 result", value)
@@ -276,8 +276,8 @@ class KaspaSendDialogMobile extends KaspaDialog{
     	if(!estimate)
     		return
     	if(estimate.fee > this.alertFeeAmount){
-			let msg = i18n.t('Transaction Fee ([n] KAS) is very large.');
-			msg = msg.replace('[n]', KAS(estimate.fee));
+			let msg = i18n.t('Transaction Fee ([n] HTN) is very large.');
+			msg = msg.replace('[n]', HTN(estimate.fee));
     		let {btn} = await FlowDialog.alert("Warning", 
     			html`${msg}`,
     			'',

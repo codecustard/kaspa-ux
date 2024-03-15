@@ -5,7 +5,7 @@ import {
 } from './flow-ux.js'
 export * from './flow-ux.js'
 import {
-	Deferred, GetTS, KAS, formatForMachine, formatForHuman,
+	Deferred, GetTS, HTN, formatForMachine, formatForHuman,
 	getLocalWallet, setLocalWallet, baseUrl, debug, MAX_UTXOS_THRESHOLD_COMPOUND,
 	getCacheFromStorage,
 	saveCacheToStorage, CONFIRMATION_COUNT, COINBASE_CFM_COUNT,
@@ -352,7 +352,7 @@ export class KaspaWalletUI extends BaseElement{
 							`:''
 						}
 						<div class="tx-date" title="#${skip+i+1} Transaction">${tx.date}</div>
-						<div class="tx-amount">${tx.in?'':'-'}${KAS(tx.amount)} KAS</div>
+						<div class="tx-amount">${tx.in?'':'-'}${HTN(tx.amount)} HTN</div>
 						<div class="br tx-note">${tx.note}</div>
 						<div class="br tx-id">
 							<a target="_blank" href="https://explorer.kaspa.org/txs/${tx.id.split(":")[0]}">${tx.id.split(":")[0]}</a>
@@ -461,7 +461,7 @@ export class KaspaWalletUI extends BaseElement{
 						row.push(tx.address)
 					break;
 					case 'amount':
-						row.push(escape(`${tx.in?'':'-'}${KAS(tx.amount)}`))
+						row.push(escape(`${tx.in?'':'-'}${HTN(tx.amount)}`))
 					break;
 					case 'direction':
 						row.push(tx.in?'RECEIVE':'SEND')
@@ -519,7 +519,7 @@ export class KaspaWalletUI extends BaseElement{
 						<div class="tx-date" title="#${skip+i+1} UTXO">
 							${tx.blockDaaScore} (${tx.mass})
 						</div>
-						<div class="tx-amount">${KAS(tx.satoshis)} KAS</div>
+						<div class="tx-amount">${HTN(tx.satoshis)} HTN</div>
 						<div class="br tx-mass"></div>
 						<div class="br tx-id">
 							<a target="_blank" href="https://explorer.kaspa.org/txs/${tx.txId}">${tx.id}</a>
@@ -715,7 +715,7 @@ export class KaspaWalletUI extends BaseElement{
 	}
 	
 	formatKAS(value){
-		return KAS(value);
+		return HTN(value);
 	}
 	showError(err){
 		console.log("showError:err", err)
@@ -1435,12 +1435,12 @@ export class KaspaWalletUI extends BaseElement{
 			value:'',
 			max,
 			heading:i18n.t('Request funds'),
-			inputLabel:i18n.t('Amount in KAS')
+			inputLabel:i18n.t('Amount in HTN')
 		}, ({value:amount, dialog})=>{
 			let sompis = formatForMachine(amount||0);
 			if(sompis > this.faucetFundsAvailable){
-				let msg = i18n.t(`You can't request more than [n] KAS.`)
-						.replace("[n]", KAS(this.faucetFundsAvailable||0))
+				let msg = i18n.t(`You can't request more than [n] HTN.`)
+						.replace("[n]", HTN(this.faucetFundsAvailable||0))
 				return dialog.setError(msg);//'
 			}
 			

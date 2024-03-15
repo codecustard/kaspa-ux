@@ -4,7 +4,7 @@ let isMobile = window.mobileMode?true:_isSmallScreen;
 window.isMobile = isMobile;
 
 import {helper, Storage, CONFIRMATION_COUNT, COINBASE_CFM_COUNT} from '@kaspa/wallet-worker';
-export const {Deferred, KAS, Decimal} = helper;
+export const {Deferred, HTN, Decimal} = helper;
 export {CONFIRMATION_COUNT, COINBASE_CFM_COUNT};
 const storage = new Storage({logLevel:'debug'});
 let {baseUrl, debug, MAX_UTXOS_THRESHOLD=80, dontInitiatedComponent=false} = window.KaspaConfig || {};
